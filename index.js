@@ -2,10 +2,10 @@
 
 
 	var client = new Twitter({
-	    consumer_key: '9w0egSCL10mSPsHtnV0US9W14',
-	    consumer_secret: 'Y7gWwbZe6GJNCkmmNl7XsV40O17wSxjXEQynGAGCPLyqRuHwuq',
-	    access_token_key: '2831463041-ZvyP3DpnhrAMW4Ts50s9Gyc1sTPH5sfvj0DjEwu',
-	    access_token_secret: 'sesiZhTqSyschpoj0tC0L9WiLZxtcids27QGNqQ7vKsfH'
+	    consumer_key: '',
+	    consumer_secret: '',
+	    access_token_key: '',
+	    access_token_secret: ''
 	});
 
 	var express = require('express');
