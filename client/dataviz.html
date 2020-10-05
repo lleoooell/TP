@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+	</head>
+	<body id='colorWrap'>
+		<h1>hello viz</h1>
+		<canvas id="myChart"></canvas>
+
+		<script src="/socket.io/socket.io.js"></script>
+		<script>
+			var ctx = document.getElementById('myChart').getContext('2d');
+			var socket = io();
+			fetch('./api/capteurs/Hum')
+			  .then(
+			    function(response) {
+			      if (response.status !== 200) {
+			        console.log('Looks like there was a problem. Status Code: ' +
+			          response.status);
+			        return;
+			      }
+
+			      // Examine the text in the response
+			      response.json().then(function(data) {
+			        console.log(data);
+			        var xs = [];
+			        var ys = [];
+			        data.forEach(function(valeurs){
+			        	xs.push(valeurs.timestamp);
+			        	ys.push(valeurs.value);
+			        })
+					var chart = new Chart(ctx, {
+					// The type of chart we want to create
+					type: 'line',
+					// The data for our dataset
+					data: {
+					labels: xs,
+					datasets: [{
+					label: 'My First dataset',
+					backgroundColor: 'rgb(255, 99, 132)',
+					borderColor: 'rgb(255, 99, 132)',
+					data: ys
+					}]
+					},
+					// Configuration options go here
+					options: {}
+					});
+											console.log(chart);
+
+					socket.on('humChange', function(msg){
+						console.log(msg);
+						chart.data.labels.push(Date.now());
+			        	chart.data.data.push(msg.newHum);
+			        	chart.update();
+					// document.getElementById("colorWrap").style.backgroundColor = msg.newcolor;
+					});
+			      });
+			    }
+			  )
+			  .catch(function(err) {
+			    console.log('Fetch Error :-S', err);
+			  });
+			
+			
+			socket.on('colorChange', function(msg){
+			console.log(msg);
+			document.getElementById("colorWrap").style.backgroundColor = msg.newcolor;
+			});
+			socket.on('tempChange', function(msg){
+			console.log(msg);
+			// document.getElementById("colorWrap").style.backgroundColor = msg.newcolor;
+			});
+			
+					</script>
+	</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+	</head>
+	<body id='colorWrap'>
+		<h1>hello twit</h1>
+		<script src="/socket.io/socket.io.js"></script>
+		<script>
+		var socket = io();
+		socket.on('colorChange', function(msg){
+		console.log(msg);
+		document.getElementById("colorWrap").style.backgroundColor = msg.newcolor;
+		});
+		socket.on('tempChange', function(msg){
+		console.log(msg);
+		// document.getElementById("colorWrap").style.backgroundColor = msg.newcolor;
+		});
+		socket.on('humChange', function(msg){
+		console.log(msg);
+		// document.getElementById("colorWrap").style.backgroundColor = msg.newcolor;
+		});
+		</script>
+	</body>
+</html>
